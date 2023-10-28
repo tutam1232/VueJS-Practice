@@ -11,7 +11,7 @@ export default {
     if (type === 'search') {
       
         if (className === 'movie') {
-            const search = params.get('per_page');
+            const search = pattern;
             const page = params.get('page');
             
             const result = data.Movies.filter((movie) =>

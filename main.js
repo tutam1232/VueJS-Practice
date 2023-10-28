@@ -2,19 +2,27 @@ import { computed } from 'vue'
 import vcheader from './header.js'
 import dbProvider from './dbProvider.js';
 import vcnavbar from './navbar.js'
-import vccarouselPopular from './carouselPopular.js'
+import vccarousel from './carousel.js'
+import vccarouselMain from './carouselMain.js'
+import vcfooter from './footer.js'
 
 export default {
     data() {
       return {
         darkModeActive: false,
         resultMostPopular: null,
-        resultTop50
+        resultTopRating: null,
+
+        titlePopular: "Most Popular",
+        idPopular:"carouselPopular",
+
+        titleTopRating: "Top Rating",
+        idTopRating:"carouselTopRating",
       };
     },
 
     components: {
-      vcheader,vcnavbar,vccarouselPopular
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter
     },
     
     watch: {
@@ -62,13 +70,23 @@ export default {
     },
     async beforeMount(){
         let url = 'get/mostpopular/';
-        this.resultMostPopular = await dbProvider.fetch(url);       
+        this.resultMostPopular = await dbProvider.fetch(url);
+
+        let topRatingUrl = 'get/top50/';
+        this.resultTopRating = await dbProvider.fetch(topRatingUrl);
     },
 
     template: `
-      <vcheader v-model:darkModeActive="darkModeActive"/>
-      <vcnavbar/>
-      <vccarouselPopular v-if="resultMostPopular !== null" :resultMostPopular="resultMostPopular"/>
+    <vcheader v-model:darkModeActive="darkModeActive" />
+    <vcnavbar />
+    <vccarouselMain/>
+    <br>
+    <vccarousel v-if="resultMostPopular !== null" :resultData="resultMostPopular" :title="titlePopular" :idTag="idPopular"/>
+    <br>
+    <vccarousel v-if="resultTopRating !== null" :resultData="resultTopRating" :title="titleTopRating" :idTag="idTopRating"/>
+    <br>
+    <br>
+    <vcfooter/>
     `,
     
   };
