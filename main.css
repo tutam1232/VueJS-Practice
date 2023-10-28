@@ -9,6 +9,7 @@ body{
 .alert{
     padding-left: 2px;
     padding-right: 2px;
+    margin-bottom: 10px;
 }
 .MSSV{
     position: absolute;
@@ -23,3 +24,10 @@ body{
     right: 2px;
     bottom: 5px;
 }
+
+/* navbar */
+.navbar{
+    margin-bottom: 5px;
+}
+
+/* sliding img */
