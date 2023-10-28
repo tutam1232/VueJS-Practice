@@ -1,0 +1,25 @@
+body{
+           
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 0.2em;
+}
+
+/* header */
+.alert{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.MSSV{
+    position: absolute;
+}
+.KeyAPI{
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+.DarkmodeButton{
+    position: absolute;
+    right: 2px;
+    bottom: 5px;
+}
