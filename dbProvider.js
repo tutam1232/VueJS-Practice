@@ -7,7 +7,7 @@ export default {
     const [type, className, ...rest] = url.split('/');
     const [pattern, paramString] = rest.join('/').split('?');
     const params = new URLSearchParams(paramString);
-    
+
     if (type === 'search') {
       
         if (className === 'movie') {
@@ -28,25 +28,47 @@ export default {
     } 
     else if (type === 'detail') {
       if (className === 'movie') {
-        // Thực hiện truy vấn chi tiết và trả về dữ liệu chi tiết
         const movieId = pattern;
         const movie = data.Movies.find((m) => m.id === movieId);
         return movie;
       }
     } 
     else if (type === 'get') {
+
       if (className === 'top50') {
-        // Thực hiện lấy danh sách top 50 (trong trường hợp này, bạn có thể cung cấp danh sách top 50 từ dữ liệu)
-        const top50 = data.Top50Movies;
-        return top50;
+        const per_page = params.get('per_page');
+        const page = params.get('page');
+        const top50 = data.Top50Movies.slice((page-1)*per_page, (page-1)*per_page+per_page);
+        return {type,className,page,per_page,top50}
       }
+
       if (className === 'mostpopular') {
-        // Thực hiện lấy danh sách top 50 (trong trường hợp này, bạn có thể cung cấp danh sách top 50 từ dữ liệu)
-        const mostpopular = data.MostPopularMovies;
-        return mostpopular;
+        const per_page = params.get('per_page');
+        const page = params.get('page');
+        const mostpopular = data.MostPopularMovies.slice((page-1)*per_page, (page-1)*per_page+per_page);
+        return {type,className,page,per_page,mostpopular};
       }
+
+      if(className==='topboxoffice'){
+        const per_page = params.get('per_page');
+        const topboxoffice=data.Movies;
+        for (let item of topboxoffice) {
+          item.boxOffice.grossUSA=Number(item.boxOffice.grossUSA.replace(/(^\$|,)/g,''));
+          item.boxOffice.cumulativeWorldwideGross=Number(item.boxOffice.cumulativeWorldwideGross.replace(/(^\$|,)/g,''));
+
+          // if(item.boxOffice.grossUSA >= item.boxOffice.cumulativeWorldwideGross)
+          //   item.boxOffice.cumulativeWorldwideGross=item.boxOffice.grossUSA;
+        }
+
+        topboxoffice.sort((a, b) => b.boxOffice.cumulativeWorldwideGross - a.boxOffice.cumulativeWorldwideGross);
+
+        let result = topboxoffice.slice(0,per_page);
+        console.log(result)
+        return result
+        
+      }
+
     }
-    // Trả về null nếu không tìm thấy kết quả hoặc URL không hợp lệ
     throw new Error('URL không hợp lệ');
   },
 };

@@ -12,6 +12,7 @@ export default {
         darkModeActive: false,
         resultMostPopular: null,
         resultTopRating: null,
+        resultTopBoxOffice: null,
 
         titlePopular: "Most Popular",
         idPopular:"carouselPopular",
@@ -69,21 +70,24 @@ export default {
         },
     },
     async beforeMount(){
-        let url = 'get/mostpopular/';
-        this.resultMostPopular = await dbProvider.fetch(url);
+        let urlPopular = 'get/mostpopular/?per_page=15&page=1';
+        this.resultMostPopular = await dbProvider.fetch(urlPopular);
 
-        let topRatingUrl = 'get/top50/';
-        this.resultTopRating = await dbProvider.fetch(topRatingUrl);
+        let urlTopRating = 'get/top50/?per_page=15&page=1';
+        this.resultTopRating = await dbProvider.fetch(urlTopRating);
+
+        let urlTopBoxOffice='get/topboxoffice/?per_page=5';
+        this.resultTopBoxOffice=await dbProvider.fetch(urlTopBoxOffice);
     },
 
     template: `
     <vcheader v-model:darkModeActive="darkModeActive" />
     <vcnavbar />
-    <vccarouselMain/>
+    <vccarouselMain v-if="resultTopBoxOffice !== null" :resultData="resultTopBoxOffice"/>
     <br>
-    <vccarousel v-if="resultMostPopular !== null" :resultData="resultMostPopular" :title="titlePopular" :idTag="idPopular"/>
+    <vccarousel v-if="resultMostPopular !== null" :resultData="resultMostPopular.mostpopular" :title="titlePopular" :idTag="idPopular"/>
     <br>
-    <vccarousel v-if="resultTopRating !== null" :resultData="resultTopRating" :title="titleTopRating" :idTag="idTopRating"/>
+    <vccarousel v-if="resultTopRating !== null" :resultData="resultTopRating.top50" :title="titleTopRating" :idTag="idTopRating"/>
     <br>
     <br>
     <vcfooter/>

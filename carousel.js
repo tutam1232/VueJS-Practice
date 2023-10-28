@@ -7,11 +7,9 @@ export default {
       };
     },
     beforeMount(){
-        this.resultData.sort((a, b) => a.rank - b.rank);
-        if(this.resultData.length < 15){
-            this.numSlide=Math.ceil(this.resultData.length /3);
-            this.numObject=this.resultData.length;
-        }
+        //this.resultData.sort((a, b) => a.rank - b.rank);
+        this.numSlide=Math.ceil(this.resultData.length /3);
+        this.numObject=this.resultData.length;
     },
    
     template: `
