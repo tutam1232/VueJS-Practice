@@ -14,19 +14,19 @@
     
     <div id="app"></div>
 
-    <div class="alert alert-light" role="alert">
+    <div class="header alert alert-light" role="alert">
         <span class="MSSV">21120551</span>
-        <h3 class="text-center text-dark">Movies info</h3>
+        <h3 class="text-center">Movies info</h3>
         <span class="KeyAPI"></span>
         <div class="form-check form-switch DarkmodeButton">
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
             <label class="form-check-label" for="flexSwitchCheckDefault">Dark mode</label>
-          </div>
+        </div>
     </div>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">Home</a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
@@ -79,9 +79,9 @@
     </div>
 
     <div id="carouselPopular" class="carousel slide">
-        <div class="d-flex justify-content-between">
-            <h5>Most popular</h5>
-            <div class="carousel-indicators" style="position: absolute; top: 0; right: 0; bottom: 0;">
+        <div class="d-flex">
+            <h5>Most Popular</h5>
+            <div class="carousel-indicators" style="position: absolute; top: 0; left: 80%; margin: 0;">
                 <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -121,6 +121,56 @@
         </button>
     </div>
 
+    <br>
+    
+    <div id="carouselTopRating" class="carousel slide">
+        <div class="d-flex">
+            <h5>Top Rating</h5>
+            <div class="carousel-indicators" style="position: absolute; top: 0; left: 80%; margin: 0;">
+                <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselPopular" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+        </div>
+        
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex text-center justify-content-center align-items-center">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNzQ1ODUzYjktMzRiMS00ODNiLWI4NzQtOTRiN2VlNTNmODFjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6716_AL_.jpg" class="rounded" alt="..." style="aspect-ratio: 4 / 2; width: 32%; margin: 2px;">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNzQ1ODUzYjktMzRiMS00ODNiLWI4NzQtOTRiN2VlNTNmODFjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6716_AL_.jpg" class="rounded" alt="..." style="aspect-ratio: 4 / 2; width: 32%; margin: 2px;"> 
+                    <img src="https://m.media-amazon.com/images/M/MV5BNzQ1ODUzYjktMzRiMS00ODNiLWI4NzQtOTRiN2VlNTNmODFjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_Ratio0.6716_AL_.jpg" class="rounded" alt="..." style="aspect-ratio: 4 / 2; width: 32%; margin: 2px;">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+                    <img src="" class="w-33" alt="...">
+                    <img src="" class="w-33" alt="...">
+                    <img src="" class="w-33" alt="...">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+                    <img src="" class="w-33" alt="...">
+                    <img src="" class="w-33" alt="...">
+                    <img src="" class="w-33" alt="...">
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPopular" data-bs-slide="prev" style="left: -7%;top:10%;">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPopular" data-bs-slide="next" style="right: -7%;top:10%;">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <br>
+
+    <div class="footer alert alert-light" role="alert">
+        <div>21120551 - Đàm Tử Tâm</div>
+    </div>
 
 
     <script type="importmap">

@@ -3,10 +3,11 @@ body{
     max-width: 1200px;
     margin: auto;
     margin-top: 0.2em;
+    color: black;
 }
 
 /* header */
-.alert{
+.header{
     padding-left: 2px;
     padding-right: 2px;
     margin-bottom: 10px;
