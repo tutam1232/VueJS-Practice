@@ -1,16 +1,20 @@
 import { computed } from 'vue'
 import vcheader from './header.js'
 import dbProvider from './dbProvider.js';
+import vcnavbar from './navbar.js'
+import vccarouselPopular from './carouselPopular.js'
 
 export default {
     data() {
       return {
         darkModeActive: false,
+        resultMostPopular: null,
+        resultTop50
       };
     },
 
     components: {
-      vcheader,
+      vcheader,vcnavbar,vccarouselPopular
     },
     
     watch: {
@@ -57,17 +61,14 @@ export default {
         },
     },
     async beforeMount(){
-        const url = 'get/top50/';
-        const result = await dbProvider.fetch(url);
-        if (result) {
-            console.log(result);
-        } else {
-            console.error('Không tìm thấy kết quả hoặc URL không hợp lệ.');
-        }
+        let url = 'get/mostpopular/';
+        this.resultMostPopular = await dbProvider.fetch(url);       
     },
 
     template: `
       <vcheader v-model:darkModeActive="darkModeActive"/>
+      <vcnavbar/>
+      <vccarouselPopular v-if="resultMostPopular !== null" :resultMostPopular="resultMostPopular"/>
     `,
     
   };
