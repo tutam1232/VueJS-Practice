@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import vcheader from './header.js'
+import dbProvider from './dbProvider.js';
 
 export default {
     data() {
@@ -14,7 +15,6 @@ export default {
     
     watch: {
         darkModeActive(newVal) {
-          //console.log('Dark mode state changed to:', newVal);
 
             if(newVal==true){ //Dark mode enabled
                 $('.header').addClass('bg-dark text-white border border-secondary border-2')
@@ -55,6 +55,15 @@ export default {
             }
 
         },
+    },
+    async beforeMount(){
+        const url = 'get/top50/';
+        const result = await dbProvider.fetch(url);
+        if (result) {
+            console.log(result);
+        } else {
+            console.error('Không tìm thấy kết quả hoặc URL không hợp lệ.');
+        }
     },
 
     template: `
