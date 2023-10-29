@@ -1,10 +1,11 @@
-import { computed } from 'vue'
+//import { computed } from 'vue'
 import vcheader from './header.js'
 import dbProvider from './dbProvider.js';
 import vcnavbar from './navbar.js'
 import vccarousel from './carousel.js'
 import vccarouselMain from './carouselMain.js'
 import vcfooter from './footer.js'
+import vcmovie from './movieDetail.js'
 
 export default {
     data() {
@@ -19,11 +20,13 @@ export default {
 
         titleTopRating: "Top Rating",
         idTopRating:"carouselTopRating",
+
+        detailMovie: null,
       };
     },
 
     components: {
-      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie
     },
     
     watch: {
@@ -79,18 +82,29 @@ export default {
         let urlTopBoxOffice='get/topboxoffice/?per_page=5';
         this.resultTopBoxOffice=await dbProvider.fetch(urlTopBoxOffice);
     },
+    methods: {
+      async loadDetailMovie(movieId) {
+        //console.log(movieId)
+        let urlDetailMovie=`detail/movie/${movieId}`;
+        this.detailMovie= await dbProvider.fetch(urlDetailMovie);
+
+        //console.log(this.detailMovie)
+      },
+    },
 
     template: `
     <vcheader v-model:darkModeActive="darkModeActive" />
     <vcnavbar />
-    <vccarouselMain v-if="resultTopBoxOffice !== null" :resultData="resultTopBoxOffice"/>
+    <vccarouselMain v-if="resultTopBoxOffice !== null" :resultData="resultTopBoxOffice" @imageClicked="loadDetailMovie"/>
     <br>
-    <vccarousel v-if="resultMostPopular !== null" :resultData="resultMostPopular.mostpopular" :title="titlePopular" :idTag="idPopular"/>
+    <vccarousel v-if="resultMostPopular !== null" :resultData="resultMostPopular.mostpopular" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
     <br>
-    <vccarousel v-if="resultTopRating !== null" :resultData="resultTopRating.top50" :title="titleTopRating" :idTag="idTopRating"/>
+    <vccarousel v-if="resultTopRating !== null" :resultData="resultTopRating.top50" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
     <br>
     <br>
     <vcfooter/>
+    <vcmovie v-if="detailMovie !== null" :resultData="detailMovie" />
+
     `,
     
   };

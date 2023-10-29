@@ -29,8 +29,18 @@ export default {
     else if (type === 'detail') {
       if (className === 'movie') {
         const movieId = pattern;
-        const movie = data.Movies.find((m) => m.id === movieId);
-        return movie;
+
+        let  movie = data.Movies.find((m) => m.id === movieId);
+        if(movie != undefined)
+          return movie;
+
+        movie = data.Top50Movies.find((m) => m.id === movieId);
+        if(movie != undefined)
+          return movie;
+
+        movie = data.MostPopularMovies.find((m) => m.id === movieId);
+        if(movie != undefined)
+          return movie;
       }
     } 
     else if (type === 'get') {
@@ -63,7 +73,7 @@ export default {
         topboxoffice.sort((a, b) => b.boxOffice.cumulativeWorldwideGross - a.boxOffice.cumulativeWorldwideGross);
 
         let result = topboxoffice.slice(0,per_page);
-        console.log(result)
+        //console.log(result)
         return result
         
       }

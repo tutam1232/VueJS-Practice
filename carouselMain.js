@@ -18,7 +18,7 @@ export default {
 
         <div class="carousel-inner">
         <div class="carousel-item" v-for="(item, index) in resultData.slice(0, numSlide)" :key="index" :class="{ active: index === 0 }">
-          <img :key="item.boxOffice.cumulativeWorldwideGross" :src="item.image" :id="item.id" :alt="item.title" class="d-block w-25 mx-auto rounded">
+          <img :key="item.boxOffice.cumulativeWorldwideGross" :src="item.image" :id="item.id" :alt="item.title" class="d-block w-25 mx-auto rounded" @click="$emit('imageClicked', item.id)">
           <div class="carousel-caption d-none d-md-block">
             <h5>{{item.fullTitle}}</h5>
             <p style="margin: 0px;">Length: {{item.runtimeStr}}</p>
