@@ -103,7 +103,7 @@ export default {
             </div>
 
             <div class="collapse" :id="'collapseReview' + index">
-              <div class="card card-body">
+              <div class="card card-body ReviewCard">
                 Spoiler content: {{ item.content }}
               </div>
             </div>
