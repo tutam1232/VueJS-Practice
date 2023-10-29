@@ -6,12 +6,14 @@ import vccarousel from './carousel.js'
 import vccarouselMain from './carouselMain.js'
 import vcfooter from './footer.js'
 import vcmovie from './movieDetail.js'
+import vcloading from './loading.js'
 
 export default {
     data() {
       return {
         showElement: true,
         showMovie:false,
+        showLoading:false,
         darkModeActive: false,
 
         resultMostPopular: null,
@@ -29,7 +31,7 @@ export default {
     },
 
     components: {
-      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading
     },
     
     watch: {
@@ -105,15 +107,21 @@ export default {
         this.showElement=false;
         this.showMovie=true;
       },
-      handleShowHome(){
-        this.showElement=true;
+      handleShowHome(){        
         this.showMovie=false;
+        this.showLoading = true;
+        setTimeout(() => {
+          this.showLoading = false; 
+          this.showElement = true;           
+        }, 1000);
       },
     },
 
     template: `
     <vcheader v-model:darkModeActive="darkModeActive" />
     <vcnavbar @homeClicked="handleShowHome"/>
+
+    <vcloading v-if="showLoading==true"/>
 
     <vccarouselMain v-if="resultTopBoxOffice !== null && showElement==true" :resultData="resultTopBoxOffice" @imageClicked="loadDetailMovie"/>
     <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.mostpopular" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
