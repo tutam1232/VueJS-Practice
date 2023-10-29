@@ -27,9 +27,10 @@ export default {
         }
     } 
     else if (type === 'detail') {
+
       if (className === 'movie') {
         const movieId = pattern;
-
+        //console.log(movieId)
         let  movie = data.Movies.find((m) => m.id === movieId);
         if(movie != undefined)
           return movie;
@@ -41,7 +42,9 @@ export default {
         movie = data.MostPopularMovies.find((m) => m.id === movieId);
         if(movie != undefined)
           return movie;
+        throw new Error(`Không tìm thấy phim id ${movieId}`);
       }
+
       if (className === 'name') {
         const actorID = pattern;
         let  actor = data.Names.find((m) => m.id === actorID);

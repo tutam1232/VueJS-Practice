@@ -124,7 +124,7 @@ export default {
         try {
           let urlDetailActor=`detail/name/${actorID}`;
           this.detailActor= await dbProvider.fetch(urlDetailActor);
-          console.log(this.detailActor)
+          //console.log(this.detailActor)
           this.handleShowActor();
         } catch (error) {
 
@@ -163,7 +163,7 @@ export default {
     <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.items" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
     <vccarousel v-if="resultTopRating !== null && showElement==true" :resultData="resultTopRating.items" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
     
-    <vcactor v-if="detailActor !== null && showActor==true" :resultData="detailActor"/>
+    <vcactor v-if="detailActor !== null && showActor==true" :resultData="detailActor"  @imageClicked="loadDetailMovie"/>
     <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null" @actorClicked="loadDetailActor"/>
 
     <vcfooter/>
