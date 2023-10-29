@@ -1,13 +1,17 @@
 export default {
+    emits:['actorClicked'],
     props: ['resultData','resultReview'],
     data() {
       return {};
     },
     template: `
-      <div :id="resultData.id" class="d-flex MovieDetail text-black">
-        <img :src="resultData.image" :alt="resultData.title" class="w-50 rounded">
+
+        <br>
+        <h1 class="text-center">{{ resultData.title }}</h1>
+        <div :id="resultData.id" class="d-flex MovieDetail text-black">
+        <img :src="resultData.image" :alt="resultData.title" class="rounded" style="width:50%;height:50%; margin-top:50px;">
         <div class="float-start" style="margin: 20px;">
-          <h1 class="text-center">{{ resultData.title }}</h1>
+          
           <br>
           <ul class="lead">
             <li>
@@ -16,7 +20,7 @@ export default {
 
             <li v-if="resultData.directorList">
               <span>Directors: </span>
-              <span v-for="(director, index) in resultData.directorList" :key="director.id">
+              <span v-for="(director, index) in resultData.directorList" :key="director.id" @click="$emit('actorClicked', director.id)">
                 <a :href="'#' + director.id">{{ director.name }}</a>
                 <span v-if="index < resultData.directorList.length - 1">, </span>
               </span>
@@ -26,12 +30,17 @@ export default {
               <div>Description: {{ resultData.plot }}</div>
             </li>
 
-            <li v-if="resultData.actorList">
-              <span>Actors: </span>
-              <span v-for="(actor, index) in resultData.actorList" :key="actor.id">
-                <a :href="'#' + actor.id">{{ actor.name }}</a>
-                <span v-if="index < resultData.actorList.length - 1">, </span>
-              </span>
+            <li v-if="resultData.actorList" >
+              <div>Actors: </div>
+
+              <div v-for="(actor, index) in resultData.actorList" :key="actor.id" class="d-flex" @click="$emit('actorClicked', actor.id)">
+                <img :src="actor.image" :alt="actor.id" style="width:50px;height:50px;">
+                <div>  
+                    <a :href="'#' + actor.id">{{ actor.name }}</a>
+                    <div>As character: {{actor.asCharacter}}</div>
+                </div>
+              </div>
+
             </li>
 
             <li v-if="resultData.genreList">

@@ -7,12 +7,14 @@ import vccarouselMain from './carouselMain.js'
 import vcfooter from './footer.js'
 import vcmovie from './movieDetail.js'
 import vcloading from './loading.js'
+import vcactor from './actorDetail.js'
 
 export default {
     data() {
       return {
         showElement: true,
         showMovie:false,
+        showActor:false,
         showLoading:false,
         darkModeActive: false,
 
@@ -28,11 +30,12 @@ export default {
 
         detailMovie: null,
         detailMovie_Review:null,
+        detailActor:null,
       };
     },
 
     components: {
-      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading,vcactor
     },
     
     watch: {
@@ -117,12 +120,31 @@ export default {
         this.handleShowMovie();
 
       },
+      async loadDetailActor(actorID){
+        try {
+          let urlDetailActor=`detail/name/${actorID}`;
+          this.detailActor= await dbProvider.fetch(urlDetailActor);
+          console.log(this.detailActor)
+          this.handleShowActor();
+        } catch (error) {
+
+          console.log(error)
+
+        }
+      },
+      handleShowActor(){
+        this.showElement=false;
+        this.showMovie=false;
+        this.showActor=true;
+      },
       handleShowMovie(){
         this.showElement=false;
+        this.showActor=false;
         this.showMovie=true;
       },
       handleShowHome(){        
         this.showMovie=false;
+        this.showActor=false;
         this.showLoading = true;
         setTimeout(() => {
           this.showLoading = false; 
@@ -141,7 +163,8 @@ export default {
     <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.items" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
     <vccarousel v-if="resultTopRating !== null && showElement==true" :resultData="resultTopRating.items" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
     
-    <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null"/>
+    <vcactor v-if="detailActor !== null && showActor==true" :resultData="detailActor"/>
+    <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null" @actorClicked="loadDetailActor"/>
 
     <vcfooter/>
     

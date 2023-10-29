@@ -42,6 +42,14 @@ export default {
         if(movie != undefined)
           return movie;
       }
+      if (className === 'name') {
+        const actorID = pattern;
+        let  actor = data.Names.find((m) => m.id === actorID);
+        if(actor != undefined)
+          return actor;
+        else
+          throw new Error(`Không tìm thấy diễn viên id ${actorID}`);
+      }
     } 
     else if (type === 'get') {
 
