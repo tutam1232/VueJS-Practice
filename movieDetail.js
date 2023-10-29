@@ -7,7 +7,7 @@ export default {
     template: `
 
         <br>
-        <h1 class="text-center">{{ resultData.title }}</h1>
+        <h1 class="text-center MovieDetail">{{ resultData.title }}</h1>
         <div :id="resultData.id" class="d-flex MovieDetail text-black">
         <img :src="resultData.image" :alt="resultData.title" class="rounded" style="width:50%;height:50%; margin-top:50px;">
         <div class="float-start" style="margin: 20px;">
@@ -76,7 +76,7 @@ export default {
 
       <div v-if="resultReview" class="mt-4">
       <div v-for="(item, index) in resultReview" :key="index" class="my-3">
-        <div class="card bg-white">
+        <div class="card bg-white text-black ReviewCard">
           <div class="card-body">
             <div>
               <strong>Username:</strong> {{ item.username }}

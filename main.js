@@ -70,6 +70,9 @@ export default {
 
                 $('.card').addClass('border border-secondary border-2')
 
+                $('.ReviewCard').addClass('bg-dark text-white')
+                $('.ReviewCard').removeClass('bg-white text-black')
+
               }
 
             else{ //Dark mode disabled
@@ -95,6 +98,9 @@ export default {
                 $('.MovieDetail').addClass('text-black')
 
                 $('.card').removeClass('border border-secondary border-2')
+
+                $('.ReviewCard').removeClass('bg-dark text-white')
+                $('.ReviewCard').addClass('bg-white text-black')
             }
 
         },
