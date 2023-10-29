@@ -9,7 +9,6 @@ import vcmovie from './movieDetail.js'
 import vcloading from './loading.js'
 import vcactor from './actorDetail.js'
 import vcsearch from './searchFilm.js'
-import vcpagination from './pagination.js'
 
 export default {
     data() {
@@ -35,17 +34,15 @@ export default {
         detailMovie_Review:null,
         detailActor:null,
 
-        defaultPerpage:6,
+        defaultPerpage:100000,
         defaultPage:1,
-        numPageSearch:1,
-        searchString:'',
         searchMovie:[],
 
       };
     },
 
     components: {
-      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading,vcactor,vcsearch,vcpagination
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading,vcactor,vcsearch
     },
     
     watch: {
@@ -181,8 +178,6 @@ export default {
             this.searchMovie.push(obj1);
             //console.log(obj1.id)
           }
-          else
-            this.numPageSearch--;
         }
       
         for (const obj2 of arr2) {
@@ -190,18 +185,11 @@ export default {
             //console.log(obj2.id)
             this.searchMovie.push(obj2);
           }
-          else
-            this.numPageSearch--;
         }
 
       },
-      changePage(n){
-        this.defaultPage=n;
-        this.handleSearchClick(this.searchString)
-      },
       
       async handleSearchClick(searchString){
-        this.searchString=searchString;
 
         this.$nextTick(() => {
 
@@ -217,19 +205,15 @@ export default {
           return;
         }
 
-        let urlByMovie=`search/movie/${searchString}?per_page=${this.defaultPerpage/2}&page=${this.defaultPage}`;
+        let urlByMovie=`search/movie/${searchString}?per_page=${this.defaultPerpage}&page=${this.defaultPage}`;
         let searchMovie_Movie=await dbProvider.fetch(urlByMovie);
-        this.numPageSearch=searchMovie_Movie.total_page;
         searchMovie_Movie=searchMovie_Movie.items;
 
-        let urlByActor=`search/name/${searchString}?per_page=${this.defaultPerpage/2}&page=${this.defaultPage}`;
-        let searchMovie_Actor=await dbProvider.fetch(urlByActor);     
-        this.numPageSearch+=searchMovie_Actor.total_page;   
+        let urlByActor=`search/name/${searchString}?per_page=${this.defaultPerpage}&page=${this.defaultPage}`;
+        let searchMovie_Actor=await dbProvider.fetch(urlByActor);        
         searchMovie_Actor=searchMovie_Actor.items;
 
         this.MergeObjectArray(searchMovie_Movie,searchMovie_Actor)
-
-        //console.log(this.numPageSearch)
 
         this.handleShowSearch();
 
@@ -251,7 +235,6 @@ export default {
     <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null" @actorClicked="loadDetailActor"/>
 
     <vcsearch v-if="showSearch==true" :resultData="searchMovie" @imageClicked="loadDetailMovie"/>
-    <vcpagination v-if="showSearch==true" @changePage="changePage" :numPageSearch="numPageSearch" :defaultPage="defaultPage"/>
 
     <vcfooter/>
     
