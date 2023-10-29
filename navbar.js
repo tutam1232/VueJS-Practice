@@ -20,7 +20,7 @@ export default {
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2 searchInput" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit" @click="setSearchString">Search</button>
+                <button class="btn btn-outline-success" @click.prevent="setSearchString">Search</button>
             </form>
         </div>
         </div>

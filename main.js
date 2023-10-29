@@ -165,6 +165,7 @@ export default {
         this.showSearch=false;      
         this.showMovie=false;
         this.showActor=false;
+        this.showElement=false;
         this.showLoading = true;
         setTimeout(() => {
           this.showLoading = false; 
@@ -190,7 +191,6 @@ export default {
       },
       
       async handleSearchClick(searchString){
-
         this.$nextTick(() => {
 
           const cards = document.querySelectorAll('.card');
