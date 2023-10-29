@@ -97,8 +97,8 @@ export default {
 
         topboxoffice.sort((a, b) => b.boxOffice.cumulativeWorldwideGross - a.boxOffice.cumulativeWorldwideGross);
 
-        let result = topboxoffice.slice((page-1)*per_page, (page-1)*per_page+per_page);
-        return {type,className,page,per_page,result};
+        let items = topboxoffice.slice((page-1)*per_page, (page-1)*per_page+per_page);
+        return {type,className,page,per_page,items};
         
       }
       if (className === 'reviews') {

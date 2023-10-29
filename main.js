@@ -233,7 +233,7 @@ export default {
 
     <vcloading v-if="showLoading==true"/>
 
-    <vccarouselMain v-if="resultTopBoxOffice !== null && showElement==true" :resultData="resultTopBoxOffice" @imageClicked="loadDetailMovie"/>
+    <vccarouselMain v-if="resultTopBoxOffice !== null && showElement==true" :resultData="resultTopBoxOffice.items" @imageClicked="loadDetailMovie"/>
     <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.items" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
     <vccarousel v-if="resultTopRating !== null && showElement==true" :resultData="resultTopRating.items" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
     
