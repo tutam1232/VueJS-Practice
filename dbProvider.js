@@ -1,5 +1,5 @@
 // dbProvider.js
-import data from './data.js';
+import data from './db/data.js';
 
 export default {
   async fetch(url) {
