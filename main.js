@@ -112,7 +112,7 @@ export default {
         let urlTopRating = 'get/top50/?per_page=15&page=1';
         this.resultTopRating = await dbProvider.fetch(urlTopRating);
 
-        let urlTopBoxOffice='get/topboxoffice/?per_page=5';
+        let urlTopBoxOffice='get/topboxoffice/?per_page=5&page=1';
         this.resultTopBoxOffice=await dbProvider.fetch(urlTopBoxOffice);
     },
     methods: {

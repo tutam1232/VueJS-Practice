@@ -88,6 +88,7 @@ export default {
 
       if(className==='topboxoffice'){
         const per_page = params.get('per_page');
+        const page = params.get('page');
         const topboxoffice=data.Movies;
         for (let item of topboxoffice) {
           item.boxOffice.grossUSA=Number(item.boxOffice.grossUSA.replace(/(^\$|,)/g,''));
@@ -96,7 +97,7 @@ export default {
 
         topboxoffice.sort((a, b) => b.boxOffice.cumulativeWorldwideGross - a.boxOffice.cumulativeWorldwideGross);
 
-        let result = topboxoffice.slice(0,per_page);
+        let result = topboxoffice.slice((page-1)*per_page, (page-1)*per_page+per_page);
         return result;
         
       }
