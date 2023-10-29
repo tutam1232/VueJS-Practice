@@ -8,7 +8,7 @@ export default {
     template: `
     <nav class="navbar navbar-expand-lg bg-white text-black rounded">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#" >Home</a>
+        <a class="navbar-brand" href="#" @click="$emit('homeClicked')">Home</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             

@@ -1,4 +1,5 @@
 export default {
+    emits: ['imageClicked'],
     props: ['resultData'],
   
     data() {
@@ -37,6 +38,7 @@ export default {
           <span class="visually-hidden">Next</span>
         </button>
     </div>
+    <br>
     `,
 };
   
