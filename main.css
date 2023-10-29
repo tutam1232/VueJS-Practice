@@ -32,3 +32,11 @@ body{
 }
 
 /* sliding img */
+.Image_Slide {
+    transition: transform 0.2s;
+}
+.Image_Slide:hover{
+    width: 200px;
+    height: 250px;
+    
+}

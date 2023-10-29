@@ -4,12 +4,36 @@ export default {
       return {
         numSlide: 5,
         numObject: 15,
+
+        isHovering: false,
+        HoverText:'',
+        HoverLeft:0,
       };
     },
     beforeMount(){
         //this.resultData.sort((a, b) => a.rank - b.rank);
         this.numSlide=Math.ceil(this.resultData.length /3);
         this.numObject=this.resultData.length;
+    },
+    methods:{
+        handleHover(item){
+            this.isHovering = true;
+
+            const hoverElement = document.getElementById(item.id);
+            if (hoverElement) {
+                const parentElement = hoverElement.closest('.carousel-inner');
+                if (parentElement) {
+                    const parentLeft = parentElement.getBoundingClientRect().left;
+                    this.HoverLeft = hoverElement.getBoundingClientRect().left - parentLeft;
+                }
+            }
+                 
+            this.HoverText=item.fullTitle;
+            
+        },
+        handleMouseLeave() {
+            this.isHovering = false;
+        },
     },
    
     template: `
@@ -26,8 +50,11 @@ export default {
         <div class="carousel-inner">
             <div class="carousel-item" v-for="(item, index) in (0, numSlide)" :key="index" :class="{ active: index === 0 }">
                 <div class="d-flex text-center justify-content-center align-items-center">
-                    <img v-for="item in resultData.slice(index * 3, (index + 1) * 3)" :key="item.rank" :src="item.image" :id="item.id" class="rounded" :alt="item.title" style="aspect-ratio: 4 / 2; width: 32%; margin: 2px;">
+                    <img v-for="item in resultData.slice(index * 3, (index + 1) * 3)" @mouseover="handleHover(item)" @mouseout="handleMouseLeave" :key="item.rank" :src="item.image" :id="item.id" class="rounded z-3 Image_Slide" :alt="item.title" style="aspect-ratio: 4 / 2; width: 32%; margin: 2px 2px 0px 2px;">
+                    </img>
+                    
                 </div>
+                    <h5 class="Hover_Title bg-dark text-white-50 text-center" v-if="isHovering" style="width: 32%; padding: 20px; position:relative;" :style="{ left: HoverLeft +'px'}">{{HoverText}}</h5>
             </div>
             
         </div>
