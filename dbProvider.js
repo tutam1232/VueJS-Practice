@@ -48,15 +48,15 @@ export default {
       if (className === 'top50') {
         const per_page = params.get('per_page');
         const page = params.get('page');
-        const top50 = data.Top50Movies.slice((page-1)*per_page, (page-1)*per_page+per_page);
-        return {type,className,page,per_page,top50}
+        const items = data.Top50Movies.slice((page-1)*per_page, (page-1)*per_page+per_page);
+        return {type,className,page,per_page,items}
       }
 
       if (className === 'mostpopular') {
         const per_page = params.get('per_page');
         const page = params.get('page');
-        const mostpopular = data.MostPopularMovies.slice((page-1)*per_page, (page-1)*per_page+per_page);
-        return {type,className,page,per_page,mostpopular};
+        const items = data.MostPopularMovies.slice((page-1)*per_page, (page-1)*per_page+per_page);
+        return {type,className,page,per_page,items};
       }
 
       if(className==='topboxoffice'){
@@ -65,17 +65,30 @@ export default {
         for (let item of topboxoffice) {
           item.boxOffice.grossUSA=Number(item.boxOffice.grossUSA.replace(/(^\$|,)/g,''));
           item.boxOffice.cumulativeWorldwideGross=Number(item.boxOffice.cumulativeWorldwideGross.replace(/(^\$|,)/g,''));
-
-          // if(item.boxOffice.grossUSA >= item.boxOffice.cumulativeWorldwideGross)
-          //   item.boxOffice.cumulativeWorldwideGross=item.boxOffice.grossUSA;
         }
 
         topboxoffice.sort((a, b) => b.boxOffice.cumulativeWorldwideGross - a.boxOffice.cumulativeWorldwideGross);
 
         let result = topboxoffice.slice(0,per_page);
-        //console.log(result)
-        return result
+        return result;
         
+      }
+      if (className === 'reviews') {
+        const movieId = pattern;
+        let result=data.Reviews.find((m) => m.movieId === movieId);
+        //console.log(result)
+        if(result==null)
+          throw new Error('Không tìm thấy reviews cho phim này');
+
+        let items=result.items;
+        let length=items.length;
+
+        return {
+          movieId,
+          length,
+          items,
+          
+        };
       }
 
     }

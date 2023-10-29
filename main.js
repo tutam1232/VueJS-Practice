@@ -27,6 +27,7 @@ export default {
         idTopRating:"carouselTopRating",
 
         detailMovie: null,
+        detailMovie_Review:null,
       };
     },
 
@@ -96,9 +97,22 @@ export default {
     },
     methods: {
       async loadDetailMovie(movieId) {
-        //console.log(movieId)
-        let urlDetailMovie=`detail/movie/${movieId}`;
-        this.detailMovie= await dbProvider.fetch(urlDetailMovie);
+
+
+        try {
+          let urlDetailMovie=`detail/movie/${movieId}`;
+          this.detailMovie= await dbProvider.fetch(urlDetailMovie);
+          
+          let urlDetailMovie_Review=`get/reviews/${movieId}`
+          this.detailMovie_Review=await dbProvider.fetch(urlDetailMovie_Review);
+        } catch (error) {
+
+          this.detailMovie_Review=null;
+          console.log(error)
+
+        }
+
+        //console.log(this.detailMovie_Review)//
 
         this.handleShowMovie();
 
@@ -124,10 +138,10 @@ export default {
     <vcloading v-if="showLoading==true"/>
 
     <vccarouselMain v-if="resultTopBoxOffice !== null && showElement==true" :resultData="resultTopBoxOffice" @imageClicked="loadDetailMovie"/>
-    <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.mostpopular" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
-    <vccarousel v-if="resultTopRating !== null && showElement==true" :resultData="resultTopRating.top50" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
+    <vccarousel v-if="resultMostPopular !== null && showElement==true" :resultData="resultMostPopular.items" :title="titlePopular" :idTag="idPopular" @imageClicked="loadDetailMovie"/>
+    <vccarousel v-if="resultTopRating !== null && showElement==true" :resultData="resultTopRating.items" :title="titleTopRating" :idTag="idTopRating" @imageClicked="loadDetailMovie"/>
     
-    <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" />
+    <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null"/>
 
     <vcfooter/>
     

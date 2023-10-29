@@ -1,11 +1,11 @@
 export default {
-    props: ['resultData'],
+    props: ['resultData','resultReview'],
     data() {
       return {};
     },
     template: `
       <div :id="resultData.id" class="d-flex MovieDetail text-black">
-        <img :src="resultData.image" :alt="resultData.title" class="w-50">
+        <img :src="resultData.image" :alt="resultData.title" class="w-50 rounded">
         <div class="float-start" style="margin: 20px;">
           <h1 class="text-center">{{ resultData.title }}</h1>
           <br>
@@ -61,6 +61,48 @@ export default {
           </ul>
         </div>
       </div>
+
+      <br>
+      <h2 class="MovieDetail">Reviews</h2>
+
+      <div v-if="resultReview" class="mt-4">
+      <div v-for="(item, index) in resultReview" :key="index" class="my-3">
+        <div class="card bg-white">
+          <div class="card-body">
+            <div>
+              <strong>Username:</strong> {{ item.username }}
+            </div>
+
+            <div>
+              <strong>Title:</strong> {{ item.title }}
+            </div>
+
+            <div>
+              <strong>Date:</strong> {{ item.date }}
+            </div>
+
+            <div>
+              <strong>Rate:</strong> {{ item.rate }}
+            </div>
+
+            <div>
+              <strong>Content:</strong>
+              <span v-if="item.warningSpoilers == true" class="text-danger" data-bs-toggle="collapse" :data-bs-target="'#collapseReview' + index">
+                (spoiler - click to view)
+              </span>
+              <span v-else>{{ item.content }}</span>
+            </div>
+
+            <div class="collapse" :id="'collapseReview' + index">
+              <div class="card card-body">
+                Spoiler content: {{ item.content }}
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
     `,
   };
   
