@@ -25,6 +25,22 @@ export default {
                 items: result.slice((page - 1) * params.get('per_page'), page * params.get('per_page')),
             };
         }
+
+        if (className === 'name') {
+          const search = pattern;
+            const page = params.get('page');
+            
+            const result = data.Movies.filter((movie) => movie.actorList.some((actor) =>
+                            actor.name.toLowerCase().includes(pattern.toLowerCase())));
+            return {
+                search,
+                page,
+                per_page: params.get('per_page'),
+                total_page: Math.ceil(result.length / params.get('per_page')),
+                total: result.length,
+                items: result.slice((page - 1) * params.get('per_page'), page * params.get('per_page')),
+          };
+      }
     } 
     else if (type === 'detail') {
 

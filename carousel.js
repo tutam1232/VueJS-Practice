@@ -54,7 +54,7 @@ export default {
                     <img v-for="item in resultData.slice(index * 3, (index + 1) * 3)" @mouseover="handleHover(item)" @mouseout="handleMouseLeave" @click="$emit('imageClicked', item.id)" :key="item.rank" :src="item.image" :id="item.id" class="rounded z-3 Image_Slide" :alt="item.title" style="aspect-ratio: 4 / 2; width: 32%; margin: 2px 2px 0px 2px;">
                     
                 </div>
-                    <h5 class="Hover_Title bg-dark text-white-50 text-center" v-if="isHovering" style="width: 32%; padding: 20px; position:relative;" :style="{ left: HoverLeft +'px'}">{{HoverText}}</h5>
+                    <h5 class="Hover_Title rounded bg-dark text-white-50 text-center" v-if="isHovering" style="width: 32%; padding: 20px; position:relative;" :style="{ left: HoverLeft +'px'}">{{HoverText}}</h5>
             </div>
             
         </div>

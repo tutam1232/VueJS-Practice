@@ -8,6 +8,7 @@ import vcfooter from './footer.js'
 import vcmovie from './movieDetail.js'
 import vcloading from './loading.js'
 import vcactor from './actorDetail.js'
+import vcsearch from './searchFilm.js'
 
 export default {
     data() {
@@ -16,6 +17,7 @@ export default {
         showMovie:false,
         showActor:false,
         showLoading:false,
+        showSearch:false,
         darkModeActive: false,
 
         resultMostPopular: null,
@@ -31,11 +33,16 @@ export default {
         detailMovie: null,
         detailMovie_Review:null,
         detailActor:null,
+
+        defaultPerpage:100000,
+        defaultPage:1,
+        searchMovie:[],
+
       };
     },
 
     components: {
-      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading,vcactor
+      vcheader,vcnavbar,vccarousel,vccarouselMain,vcfooter,vcmovie,vcloading,vcactor,vcsearch
     },
     
     watch: {
@@ -61,6 +68,8 @@ export default {
                 $('.MovieDetail').addClass('text-white')
                 $('.MovieDetail').removeClass('text-black')
 
+                $('.card').addClass('border border-secondary border-2')
+
               }
 
             else{ //Dark mode disabled
@@ -84,6 +93,8 @@ export default {
 
                 $('.MovieDetail').removeClass('text-white')
                 $('.MovieDetail').addClass('text-black')
+
+                $('.card').removeClass('border border-secondary border-2')
             }
 
         },
@@ -133,16 +144,25 @@ export default {
         }
       },
       handleShowActor(){
+        this.showSearch=false;
         this.showElement=false;
         this.showMovie=false;
         this.showActor=true;
       },
       handleShowMovie(){
+        this.showSearch=false;
         this.showElement=false;
         this.showActor=false;
         this.showMovie=true;
       },
-      handleShowHome(){        
+      handleShowSearch(){
+        this.showSearch=true;
+        this.showElement=false;
+        this.showActor=false;
+        this.showMovie=false;
+      },
+      handleShowHome(){  
+        this.showSearch=false;      
         this.showMovie=false;
         this.showActor=false;
         this.showLoading = true;
@@ -151,11 +171,59 @@ export default {
           this.showElement = true;           
         }, 1000);
       },
+      MergeObjectArray(arr1, arr2) {
+      
+        for (const obj1 of arr1) {
+          if (!this.searchMovie.some(obj => obj.id == obj1.id && obj.name == obj1.name)) {
+            this.searchMovie.push(obj1);
+            //console.log(obj1.id)
+          }
+        }
+      
+        for (const obj2 of arr2) {
+          if (!this.searchMovie.some(obj => obj.id == obj2.id && obj.name == obj2.name)) {
+            //console.log(obj2.id)
+            this.searchMovie.push(obj2);
+          }
+        }
+
+      },
+      
+      async handleSearchClick(searchString){
+
+        this.$nextTick(() => {
+
+          const cards = document.querySelectorAll('.card');
+          for (const card of cards) {
+            card.remove();
+          }});
+
+        this.searchMovie=[];
+
+        if(searchString == "") {
+          this.handleShowHome();
+          return;
+        }
+
+        let urlByMovie=`search/movie/${searchString}?per_page=${this.defaultPerpage}&page=${this.defaultPage}`;
+        let searchMovie_Movie=await dbProvider.fetch(urlByMovie);
+        searchMovie_Movie=searchMovie_Movie.items;
+
+        let urlByActor=`search/name/${searchString}?per_page=${this.defaultPerpage}&page=${this.defaultPage}`;
+        let searchMovie_Actor=await dbProvider.fetch(urlByActor);        
+        searchMovie_Actor=searchMovie_Actor.items;
+
+        this.MergeObjectArray(searchMovie_Movie,searchMovie_Actor)
+
+        this.handleShowSearch();
+
+        //console.log(this.searchMovie)
+      },
     },
 
     template: `
     <vcheader v-model:darkModeActive="darkModeActive" />
-    <vcnavbar @homeClicked="handleShowHome"/>
+    <vcnavbar @homeClicked="handleShowHome" @searchClicked="handleSearchClick"/>
 
     <vcloading v-if="showLoading==true"/>
 
@@ -165,6 +233,8 @@ export default {
     
     <vcactor v-if="detailActor !== null && showActor==true" :resultData="detailActor"  @imageClicked="loadDetailMovie"/>
     <vcmovie v-if="detailMovie !== null && showMovie==true" :resultData="detailMovie" :resultReview="detailMovie_Review !== null ? detailMovie_Review.items : null" @actorClicked="loadDetailActor"/>
+
+    <vcsearch v-if="showSearch==true" :resultData="searchMovie" @imageClicked="loadDetailMovie"/>
 
     <vcfooter/>
     

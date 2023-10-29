@@ -4,7 +4,12 @@ export default {
       return {
       };
     },
-   
+   methods:{
+    setSearchString(){
+        let searchData=$('.searchInput').val();
+        this.$emit('searchClicked',searchData)
+    },
+   },
     template: `
     <nav class="navbar navbar-expand-lg bg-white text-black rounded">
         <div class="container-fluid">
@@ -14,8 +19,8 @@ export default {
             
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2 searchInput" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" @click="setSearchString">Search</button>
             </form>
         </div>
         </div>
